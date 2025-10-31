@@ -1,11 +1,8 @@
 package ubp.das.ristorinobackend.controller.auth;
 
-import lombok.RequiredArgsConstructor;
 import ubp.das.ristorinobackend.dto.auth.RegistroRequest;
 import ubp.das.ristorinobackend.dto.auth.LoginRequest;
 import ubp.das.ristorinobackend.service.AuthService;
-import ubp.das.ristorinobackend.security.JwtProvider;
-import ubp.das.ristorinobackend.security.TokenBlacklistService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
-    private final JwtProvider jwtProvider;
-    private final TokenBlacklistService blacklist;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     // Req. 1: Dar de alta usuario
     @PostMapping("/register")
@@ -44,23 +42,5 @@ public class AuthController {
         } catch (Exception e) {
             return new ResponseEntity<>("Credenciales inválidas.", HttpStatus.UNAUTHORIZED);
         }
-    }
-
-    // Req. 5: Cerrar sesión
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader(value = "Authorization", required = false) String authorization) {
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
-            return ResponseEntity.badRequest().body("Falta Authorization: Bearer <token>");
-        }
-        String token = authorization.substring(7);
-
-        if (!jwtProvider.validateToken(token)) {
-            return ResponseEntity.ok("Sesión cerrada (token ya inválido).");
-        }
-
-        long exp = jwtProvider.getExpirationEpochSeconds(token);
-        blacklist.revoke(token, exp);
-
-        return ResponseEntity.ok("Sesión cerrada.");
     }
 }
