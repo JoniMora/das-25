@@ -41,6 +41,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/search/**", "/api/v1/restaurants/**").permitAll()
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(e -> e
+                                .authenticationEntryPoint((req, res, ex) -> res.sendError(401)) // no autenticado
+                                .accessDeniedHandler((req, res, ex) -> res.sendError(403))      // sin permisos
+
                 );
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
