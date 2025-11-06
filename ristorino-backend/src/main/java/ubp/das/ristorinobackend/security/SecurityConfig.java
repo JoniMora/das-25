@@ -44,6 +44,9 @@ public class SecurityConfig {
                         // Permite acceso público al detalle de restaurantes (Req. 11)
                         .requestMatchers("/v1/restaurants/**").permitAll()
 
+                        // Permite acceso público a las promociones (Req. 12)
+                        .requestMatchers("/v1/promotions/**").permitAll()
+
                         // Permite acceso público a la búsqueda (Req. 10)
                         //.requestMatchers("/v1/search/**").permitAll()
 
