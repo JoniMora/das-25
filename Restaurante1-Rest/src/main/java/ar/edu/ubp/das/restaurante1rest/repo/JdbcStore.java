@@ -23,7 +23,7 @@ public class JdbcStore implements Store {
     // ===================== SUCURSALES =====================
     @Override
     public List<BranchDto> listEnabledBranches() {
-        // No usamos columnas que no existen; city sale de localidad o barrio; enabled=1 fijo.
+
         final String sql = """
             SELECT 
               s.nro_sucursal AS id,
@@ -49,7 +49,7 @@ public class JdbcStore implements Store {
     // ===================== SLOTS BASE =====================
     @Override
     public List<String> getBaseSlots(int branchId) {
-        // Usamos la TVF fn_slots_discretos(rest, suc, step). Derivamos nro_restaurante en línea.
+
         final String sql = """
             SELECT s.hhmm
             FROM dbo.fn_slots_discretos(
@@ -79,11 +79,10 @@ public class JdbcStore implements Store {
         List<String> list = jdbc.query(sql, ps -> {
             ps.setInt(1, branchId);
             ps.setInt(2, branchId);
-            ps.setDate(3, java.sql.Date.valueOf(date)); // 👈 importante
+            ps.setDate(3, java.sql.Date.valueOf(date));
         }, (rs, i) -> rs.getString("hhmm"));
         return new HashSet<>(list);
     }
-
 
     // ===================== INSERT RESERVA =====================
     @Override
@@ -121,28 +120,24 @@ public class JdbcStore implements Store {
     """;
 
         Long cod = jdbc.query(sql, ps -> {
-            // @rest + EXISTS
-            ps.setInt(1, branchId);                          // sucursal -> @rest
-            ps.setInt(2, branchId);                          // EXISTS.nro_sucursal
-            ps.setDate(3, java.sql.Date.valueOf(date));      // EXISTS.fecha_reserva
-            ps.setString(4, time.toString());                // EXISTS.hora_reserva (CAST en SQL)
+            ps.setInt(1, branchId);
+            ps.setInt(2, branchId);
+            ps.setDate(3, java.sql.Date.valueOf(date));
+            ps.setString(4, time.toString());
 
-            // INSERT params
-            ps.setInt(5, clientId);                          // nro_cliente
-            ps.setDate(6, java.sql.Date.valueOf(date));      // fecha_reserva
-            ps.setInt(7, branchId);                          // nro_sucursal
+            ps.setInt(5, clientId);
+            ps.setDate(6, java.sql.Date.valueOf(date));
+            ps.setInt(7, branchId);
             if (zoneId == null) ps.setNull(8, java.sql.Types.INTEGER);
-            else                ps.setInt(8, zoneId);        // cod_zona
-            ps.setString(9, time.toString());                // hora_reserva (CAST en SQL)
-            ps.setInt(10, adults);                           // cant_adultos
-            ps.setInt(11, kids);                             // cant_menores
+            else                ps.setInt(8, zoneId);
+            ps.setString(9, time.toString());
+            ps.setInt(10, adults);
+            ps.setInt(11, kids);
         }, rs -> rs.next() ? rs.getLong("cod") : null);
 
         if (cod == null) throw new IllegalStateException("No se obtuvo cod_reserva");
         return cod;
     }
-
-
 
     // ===================== CANCELAR RESERVA =====================
     @Override

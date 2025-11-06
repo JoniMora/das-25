@@ -20,10 +20,11 @@ public class ApiKeyFilter  extends OncePerRequestFilter{
         String path = req.getRequestURI();
         String method = req.getMethod();
 
-        // Proteger solo reservas (POST/DELETE). GET pasa libre.
         boolean protect =
                 ("POST".equals(method) && path.matches(".*/api/v1/branches/\\d+/reservations$")) ||
-                        ("DELETE".equals(method) && path.matches(".*/api/v1/reservations/\\d+$"));
+                ("DELETE".equals(method) && path.matches(".*/api/v1/reservations/\\d+$")) ||
+                ("POST".equals(method) && path.matches(".*/api/v1/promotions/click$")) ||
+                ("GET".equals(method) && path.matches(".*/api/v1/promotions$"));
 
         if (!protect) {
             chain.doFilter(req, res);
