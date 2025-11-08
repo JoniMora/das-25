@@ -1,0 +1,7 @@
+.hero { margin-bottom: 1rem; }
+.muted { color: #666; }
+.search .toolbar { display: flex; gap: .5rem; margin: .5rem 0 1rem; }
+.hero {
+    margin-top: 1.5rem; /* Ajusta este valor (1.5rem es aproximadamente 24px) */
+    margin-bottom: 1rem; /* Puedes agregar margen inferior si es necesario */
+}

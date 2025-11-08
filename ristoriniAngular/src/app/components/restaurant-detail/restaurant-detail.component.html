@@ -1,17 +1,34 @@
-<div class="restaurant" *ngIf="restaurant">
-  <h2>{{ restaurant.name }}</h2>
-  <p *ngIf="restaurant.description">{{ restaurant.description }}</p>
-  <p *ngIf="restaurant.address || restaurant.locality">
-    {{ restaurant.address }} <span *ngIf="restaurant.locality">— {{ restaurant.locality }}</span>
-  </p>
-  <p *ngIf="restaurant.phone">Tel: {{ restaurant.phone }}</p>
-  <p *ngIf="restaurant.website">
-    <a [href]="restaurant.website" target="_blank" rel="noopener">Sitio web</a>
-  </p>
-  <p *ngIf="restaurant.openingHours">Horarios: {{ restaurant.openingHours }}</p>
-
-  <div *ngIf="restaurant.images?.length">
-    <img *ngFor="let img of restaurant.images" [src]="img" alt="{{ restaurant.name }}">
-  </div>
+@if (restaurant) {
+  <div class="restaurant">
+    <h2>{{ restaurant.name }}</h2>
+    @if (restaurant.description) {
+      <p>{{ restaurant.description }}</p>
+    }
+    @if (restaurant.address || restaurant.locality) {
+      <p>
+        {{ restaurant.address }} @if (restaurant.locality) {
+        <span>— {{ restaurant.locality }}</span>
+      }
+    </p>
+  }
+  @if (restaurant.phone) {
+    <p>Tel: {{ restaurant.phone }}</p>
+  }
+  @if (restaurant.website) {
+    <p>
+      <a [href]="restaurant.website" target="_blank" rel="noopener">Sitio web</a>
+    </p>
+  }
+  @if (restaurant.openingHours) {
+    <p>Horarios: {{ restaurant.openingHours }}</p>
+  }
+  @if (restaurant.images?.length) {
+    <div>
+      @for (img of restaurant.images; track img) {
+        <img [src]="img" alt="{{ restaurant.name }}">
+      }
+    </div>
+  }
 </div>
+}
 

@@ -14,14 +14,6 @@ export class PromotionsService {
     return this.http.get<Promotion[]>(`${this.base}/promotions`, { params: httpParams });
   }
 
-  getAllPromotions(): Observable<Promotion[]> {
-    return this.http.get<Promotion[]>(`${this.base}/promotions`);
-  }
-
-  getById(id: string): Observable<Promotion> {
-    return this.http.get<Promotion>(`${this.base}/promotions/${id}`);
-  }
-
   registerClick(promotionId: string) {
     const url = `${this.base}/promotions/${promotionId}/clicks`;
     const body = { source: 'web', clickedAt: new Date().toISOString() };

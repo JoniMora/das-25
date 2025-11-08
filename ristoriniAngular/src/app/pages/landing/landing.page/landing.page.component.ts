@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-import { Promotion } from '../../../models/promotion.model';
-import { PromotionsService } from '../../../service/promotions.service';
 import { PromotionListComponent } from '../../../components/promotion-list/promotion-list.component';
+import { PromotionsService } from '../../../service/promotions.service';
+import { Promotion } from '../../../models/promotion.model';
 
 @Component({
   standalone: true,
@@ -18,18 +17,19 @@ export class LandingPageComponent implements OnInit {
   query = '';
   promotions: Promotion[] = [];
 
-  constructor(private promos: PromotionsService) {}
+  constructor(private promos: PromotionsService) {console.log('[Landing] cargado');}
 
   ngOnInit() { this.load(); }
 
   load() {
     this.loading = true;
     this.promos.list({ active: true, query: this.query }).subscribe({
-      next: (res) => { this.promotions = res; this.loading = false; },
+      next: res => { this.promotions = res; this.loading = false; },
       error: () => { this.promotions = []; this.loading = false; }
     });
   }
 }
+
 
 
 

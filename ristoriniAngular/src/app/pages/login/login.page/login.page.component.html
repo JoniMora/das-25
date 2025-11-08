@@ -1,1 +1,18 @@
-<p>login.page works!</p>
+<h1>Ingresar</h1>
+
+<form (ngSubmit)="submit()">
+  <label>
+    Email
+    <input name="email" type="email" [(ngModel)]="email" required />
+  </label>
+
+  <label>
+    Contraseña
+    <input name="password" type="password" [(ngModel)]="password" required />
+  </label>
+
+  <button type="submit">Entrar</button>
+
+  <div class="error" *ngIf="error">{{ error }}</div>
+</form>
+

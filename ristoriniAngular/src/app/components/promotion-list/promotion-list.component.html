@@ -1,17 +1,20 @@
-<div *ngIf="!promotions?.length" class="muted">No hay promociones.</div>
+@if (!promotions.length) {
+  <div class="muted">No hay promociones.</div>
+} @else {
+  <div class="grid">
+    <a *ngFor="let p of promotions"
+       class="card"
+       [routerLink]="['/restaurants', p.restaurant.id]"
+       (click)="onPromotionClick(p)">
+      <img *ngIf="p.imageUrl" [src]="p.imageUrl" alt="{{ p.name }}" />
+      <div class="body">
+        <div class="brand">{{ p.brandName }}</div>
+        <h3>{{ p.name }}</h3>
+        <div class="dates">{{ p.startDate | date }} – {{ p.endDate | date }}</div>
+      </div>
+    </a>
+  </div>
+}
 
-<div class="grid">
-  <a *ngFor="let p of promotions"
-     class="card"
-     [routerLink]="['/restaurants', p.restaurant.id]"
-     (click)="onPromotionClick(p)">
-    <img *ngIf="p.imageUrl" [src]="p.imageUrl" alt="{{ p.name }}" />
-    <div class="body">
-      <div class="brand">{{ p.brandName }}</div>
-      <h3>{{ p.name }}</h3>
-      <div class="dates">{{ p.startDate | date }} – {{ p.endDate | date }}</div>
-    </div>
-  </a>
-</div>
 
 
