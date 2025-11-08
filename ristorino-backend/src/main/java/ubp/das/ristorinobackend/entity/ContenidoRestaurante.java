@@ -1,15 +1,19 @@
 package ubp.das.ristorinobackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "contenidos_restaurantes")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"restaurante"})
 public class ContenidoRestaurante {
 
     @EmbeddedId

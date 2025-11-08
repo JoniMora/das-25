@@ -1,19 +1,22 @@
 package ubp.das.ristorinobackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "sucursales_restaurantes")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"restaurante"})
 public class SucursalRestaurante {
 
     @EmbeddedId
     private SucursalRestauranteId id;
 
-    // Mapeo inverso (ManyToOne) para que la sucursal "conozca" a su restaurante
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("nroRestaurante")
     @JoinColumn(name = "nro_restaurante")

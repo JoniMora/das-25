@@ -1,6 +1,8 @@
 package ubp.das.ristorinobackend.dto.restaurant;
 
 import lombok.Data;
+import ubp.das.ristorinobackend.dto.promotion.PromocionDTO;
+
 import java.util.List;
 
 @Data
@@ -13,5 +15,5 @@ public class RestauranteDetalleDTO {
     private String imagenUrl;
 
     private List<SucursalDetalleDTO> sucursales;
-    private List<String> promocionesVigentes;
+    private List<PromocionDTO> promocionesVigentes;
 }

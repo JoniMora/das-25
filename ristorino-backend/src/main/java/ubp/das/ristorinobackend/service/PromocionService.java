@@ -21,4 +21,11 @@ public class PromocionService {
                 .map(PromocionDTO::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    public List<PromocionDTO> obtenerPromocionesActivasPorRestaurante(Long restauranteId) {
+        return repository.findActivePromotionsByRestauranteId(restauranteId)
+                .stream()
+                .map(PromocionDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
 }
