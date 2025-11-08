@@ -1,0 +1,23 @@
+<section class="hero">
+  <h3 class="h3-normal">Descubrí promociones de restaurantes en Córdoba.</h3>
+</section>
+
+<section class="search">
+  <h2>Promociones</h2>
+
+  <div class="toolbar">
+    <input type="search" placeholder="Buscar..." [(ngModel)]="query" />
+    <button (click)="load()">Buscar</button>
+  </div>
+
+  <div *ngIf="loading">Cargando…</div>
+  <app-promotion-list *ngIf="!loading" [promotions]="promotions"></app-promotion-list>
+</section>
+
+
+
+
+
+
+
+

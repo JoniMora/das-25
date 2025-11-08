@@ -1,0 +1,14 @@
+/* src/app/pages/shell/app-shell.component.css (CÓDIGO ORIGINAL) */
+
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.navigation {
+    margin-left: 1rem;
+}
+
+.auth-actions {
+    margin-left: auto;
+}

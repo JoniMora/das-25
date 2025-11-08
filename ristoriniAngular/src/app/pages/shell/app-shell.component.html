@@ -1,0 +1,19 @@
+<header class="app-header">
+  <div class="header-content">
+    <h1 class="logo"><a routerLink="/" class="logo-link">Ristorino</a></h1>
+    <nav class="navigation"><a routerLink="/" class="nav-link">Inicio</a></nav>
+    <div class="auth-actions">
+      <a *ngIf="!auth.isLoggedIn()" routerLink="/login" class="nav-link">Ingresar</a>
+      <button *ngIf="auth.isLoggedIn()" class="nav-link" (click)="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="app-footer">
+  <div class="footer-content"></div>
+</footer>
+
