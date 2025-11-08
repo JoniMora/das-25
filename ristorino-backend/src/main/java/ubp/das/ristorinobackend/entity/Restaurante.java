@@ -1,14 +1,19 @@
 package ubp.das.ristorinobackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
-import java.util.List;
+import lombok.EqualsAndHashCode;
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "restaurantes")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"sucursales", "preferencias", "contenidos"})
 public class Restaurante {
 
     @Id
@@ -23,9 +28,21 @@ public class Restaurante {
     private String cuit;
 
     @OneToMany(
-            mappedBy = "restaurante", // Mapeado por el campo "restaurante" en SucursalRestaurante
+            mappedBy = "restaurante",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY // Lazy loading
+            fetch = FetchType.LAZY
     )
-    private List<SucursalRestaurante> sucursales;
+    private Set<SucursalRestaurante> sucursales = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "restaurante",
+            fetch = FetchType.LAZY
+    )
+    private Set<PreferenciaRestaurante> preferencias = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "restaurante",
+            fetch = FetchType.LAZY
+    )
+    private Set<ContenidoRestaurante> contenidos = new HashSet<>();
 }
