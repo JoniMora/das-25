@@ -1,7 +1,9 @@
 package ubp.das.ristorinobackend.service;
 
+import ubp.das.ristorinobackend.dto.auth.LoginResponse;
 import ubp.das.ristorinobackend.dto.auth.RegistroRequest;
 import ubp.das.ristorinobackend.dto.auth.LoginRequest;
+import ubp.das.ristorinobackend.dto.auth.UserDTO;
 import ubp.das.ristorinobackend.entity.Cliente;
 import ubp.das.ristorinobackend.repository.ClienteRepository;
 import ubp.das.ristorinobackend.security.JwtProvider; // Importar la utilidad JWT
@@ -40,15 +42,27 @@ public class AuthService {
         return clienteRepository.save(cliente);
     }
 
-    public String autenticarCliente(LoginRequest request) {
+    public LoginResponse autenticarCliente(LoginRequest request) {
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getCorreo(),
                         request.getPassword()
                 )
         );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return jwtProvider.generateToken(authentication);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwtToken = jwtProvider.generateToken(authentication);
+
+        Cliente cliente = clienteRepository.findByCorreo(request.getCorreo())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado después de autenticación"));
+
+        UserDTO userDto = UserDTO.builder()
+                .id(cliente.getNroCliente())
+                .email(cliente.getCorreo())
+                .name(cliente.getNombre() + " " + cliente.getApellido())
+                .build();
+
+        return new LoginResponse(jwtToken, userDto);
     }
 }
