@@ -1,7 +1,3 @@
-<h1>Restaurante</h1>
-
-@if (restaurant) {
+<ng-container *ngIf="restaurant$ | async as restaurant">
   <app-restaurant-detail [restaurant]="restaurant"></app-restaurant-detail>
-} @else {
-  <div>Cargando restaurante...</div>
-}
+</ng-container>
