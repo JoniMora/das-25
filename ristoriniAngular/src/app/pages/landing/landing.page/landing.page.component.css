@@ -1,7 +1,83 @@
-.hero { margin-bottom: 1rem; }
-.muted { color: #666; }
-.search .toolbar { display: flex; gap: .5rem; margin: .5rem 0 1rem; }
+/* Contenedor principal */
 .hero {
-    margin-top: 1.5rem; /* Ajusta este valor (1.5rem es aproximadamente 24px) */
-    margin-bottom: 1rem; /* Puedes agregar margen inferior si es necesario */
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+}
+
+.hero h3 {
+  font-weight: 300;
+  font-size: 1.5em;
+  color: #444;
+}
+
+/* Color nuevo (Magenta/Violet) */
+h2 {
+  font-weight: 400;
+  color: #333;
+  margin: 40px 0 20px 0;
+  padding-bottom: 10px;
+  /* Este es el color primario estándar del tema "Magenta/Violet" (E91E63)
+    o puedes usar el color 'Deep Purple' (673AB7) si ese fue el que elegiste.
+    Usa el que mejor se vea con tu paleta. Probemos con el magenta:
+  */
+  border-bottom: 2px solid #E91E63; 
+}
+
+/* 1. Contenedor de Scroll Horizontal (Simula Carrusel) */
+.horizontal-scroll-container {
+  display: flex;
+  overflow-x: auto; /* Habilita el scroll horizontal */
+  padding-bottom: 20px; /* Deja espacio para la barra de scroll */
+  gap: 20px; /* Espacio entre tarjetas */
+}
+
+.promo-card {
+  min-width: 320px; /* Ancho fijo para las tarjetas de promo */
+  max-width: 320px;
+}
+
+/* 2. Grilla de Restaurantes */
+.restaurant-grid {
+  display: grid;
+  /* Grilla responsive: crea columnas de 300px min, y las ajusta (auto-fill) */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Estilos comunes para las tarjetas */
+.promo-card,
+.restaurant-card {
+  transition: box-shadow 0.3s ease;
+}
+
+.promo-card:hover,
+.restaurant-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Asegura que las imágenes de la tarjeta tengan un alto fijo */
+[mat-card-image] {
+  height: 200px;
+  object-fit: cover;
+  background-color: #eee; /* Color mientras carga */
+}
+
+/* Alinea los botones */
+mat-card-actions {
+  padding: 8px 16px !important; /* Sobreescribe el padding de Material */
+}
+
+/* Spinner de Carga */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+}
+
+.section-divider {
+  margin: 40px 0;
+  border: 0;
+  border-top: 1px solid #eee;
 }

@@ -1,0 +1,23 @@
+/*
+ * 1. Arreglar la paleta de colores
+ * (Usa las variables de Angular Material) 
+ */
+
+/* Reemplaza el color del header por el color "primary" 
+  de tu tema (Magenta/Violeta).
+*/
+.main-header { /* O como se llame tu header/toolbar */
+  background-color: #E91E63; /* Magenta (Material Primary) */
+  color: white;
+}
+
+/* Reemplaza la línea roja (que choca con el magenta) 
+  por el color "accent" de tu tema (Violeta).
+*/
+h2 {
+  font-weight: 400;
+  color: #333;
+  margin: 40px 0 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #673AB7; /* Violeta (Material Accent) */
+}

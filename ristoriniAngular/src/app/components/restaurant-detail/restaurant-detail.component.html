@@ -1,34 +1,61 @@
-@if (restaurant) {
-  <div class="restaurant">
-    <h2>{{ restaurant.name }}</h2>
-    @if (restaurant.description) {
-      <p>{{ restaurant.description }}</p>
-    }
-    @if (restaurant.address || restaurant.locality) {
-      <p>
-        {{ restaurant.address }} @if (restaurant.locality) {
-        <span>— {{ restaurant.locality }}</span>
-      }
-    </p>
-  }
-  @if (restaurant.phone) {
-    <p>Tel: {{ restaurant.phone }}</p>
-  }
-  @if (restaurant.website) {
-    <p>
-      <a [href]="restaurant.website" target="_blank" rel="noopener">Sitio web</a>
-    </p>
-  }
-  @if (restaurant.openingHours) {
-    <p>Horarios: {{ restaurant.openingHours }}</p>
-  }
-  @if (restaurant.images?.length) {
-    <div>
-      @for (img of restaurant.images; track img) {
-        <img [src]="img" alt="{{ restaurant.name }}">
-      }
-    </div>
-  }
-</div>
-}
+<div class="detail-container" *ngIf="restaurant; else loading">
 
+  <header class="detail-header">
+    <img [src]="restaurant.imagenUrl || 'assets/images/default-resto.png'" alt="{{ restaurant.nombre }}">
+    <div class="header-content">
+      <h1>{{ restaurant.nombre }}</h1>
+      <p class="tipo-cocina">{{ restaurant.tipoCocina }}</p>
+    </div>
+  </header>
+
+  <mat-tab-group animationDuration="0ms">
+    
+    <mat-tab label="Información">
+      <div class="tab-content">
+        <h3>Descripción</h3>
+        <p>{{ restaurant.descripcion }}</p>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Sucursales ({{ restaurant.sucursales.length }})">
+      <div class="tab-content">
+        <mat-list role="list">
+          <div *ngFor="let sucursal of restaurant.sucursales">
+            <mat-list-item role="listitem">
+              <mat-icon matListItemIcon>store</mat-icon>
+              <div matListItemTitle>{{ sucursal.nombre }}</div>
+              <div matListItemLine>{{ sucursal.direccion }} ({{ sucursal.barrio }})</div>
+              <div matListItemLine>Capacidad: {{ sucursal.capacidad }} personas</div>
+            </mat-list-item>
+          </div>
+        </mat-list>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Promociones ({{ restaurant.promocionesVigentes.length }})">
+      <div class="tab-content promo-list">
+        <mat-card class="promo-card" *ngFor="let promo of restaurant.promocionesVigentes">
+          <mat-card-header>
+            <mat-card-title>{{ promo.titulo }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ promo.descripcion }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <a mat-button color="primary" [routerLink]="['/reservar', promo.restauranteId]">
+              ¡LO QUIERO!
+            </a>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+
+</div>
+
+<ng-template #loading>
+  <div class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+</ng-template>

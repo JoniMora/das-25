@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Restaurant } from '../models/restaurant.model';
-import { Promotion } from '../models/promotion.model';
+import { RestauranteResumenDTO } from '../models/restaurante-resumen.dto';
+import { PromocionDTO } from '../models/promocion.dto';
 
 
 @Injectable({ providedIn: 'root' })
@@ -10,8 +10,8 @@ export class RestaurantsService {
   private base = '/api/v1';
   constructor(private http: HttpClient) {}
 
-  getById(id: string): Observable<Restaurant> {
-    return this.http.get<Restaurant>(`${this.base}/restaurants/${id}`);
+  getById(id: string): Observable<RestauranteResumenDTO> {
+    return this.http.get<RestauranteResumenDTO>(`${this.base}/restaurants/${id}`);
   }
 }
 

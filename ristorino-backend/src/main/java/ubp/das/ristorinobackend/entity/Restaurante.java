@@ -27,6 +27,12 @@ public class Restaurante {
     @Column(name = "cuit", nullable = false, unique = true)
     private String cuit;
 
+    @Column(name = "descripcion")
+    private String descripcion;
+
+    @Column(name = "imagen_url")
+    private String imagenUrl;
+
     @OneToMany(
             mappedBy = "restaurante",
             cascade = CascadeType.ALL,

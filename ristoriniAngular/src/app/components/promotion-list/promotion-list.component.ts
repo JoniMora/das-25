@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Promotion } from '../../models/promotion.model';
+import { PromocionDTO } from '../../models/promocion.dto';
 import { PromotionsService } from '../../service/promotions.service';
 
 @Component({
@@ -12,9 +12,9 @@ import { PromotionsService } from '../../service/promotions.service';
   styleUrls: ['./promotion-list.component.css']
 })
 export class PromotionListComponent {
-  @Input() promotions: Promotion[] = [];
+  @Input() promotions: PromocionDTO[] = [];
   constructor(private promosSvc: PromotionsService) {}
-  onPromotionClick(p: Promotion) { this.promosSvc.logClick(p.id).subscribe(); }
+  onPromotionClick(p: PromocionDTO) { this.promosSvc.logClick(p.codContenido).subscribe(); }
 }
 
 
