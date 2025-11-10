@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PromotionListComponent } from './promotion-list.component';
 
 describe('PromotionListComponent', () => {
