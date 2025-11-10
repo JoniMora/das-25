@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ContenidoRestauranteRepository extends JpaRepository<ContenidoRestaurante, ContenidoRestauranteId> {
@@ -22,4 +23,6 @@ public interface ContenidoRestauranteRepository extends JpaRepository<ContenidoR
             "AND c.fechaIniVigencia <= CURRENT_DATE " +
             "AND (c.fechaFinVigencia IS NULL OR c.fechaFinVigencia >= CURRENT_DATE)")
     List<ContenidoRestaurante> findActivePromotionsByRestauranteId(Long restauranteId);
+    //Busca la promo al hacer click
+    Optional<ContenidoRestaurante> findByCodContenidoRestaurante(String codContenidoRestaurante);
 }

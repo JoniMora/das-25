@@ -57,11 +57,13 @@ public class SecurityConfig {
                         .requestMatchers("/v1/restaurants/**").permitAll()
 
                         // Permite acceso público a las promociones (Req. 12)
-                        .requestMatchers("/v1/promotions/**").permitAll()
-
+                        //Permiten q ususarios No registrados puedan interactuar
+                        .requestMatchers(HttpMethod.GET, "/v1/promotions/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/promotions/click").permitAll()
                         // Permite acceso público a la búsqueda (Req. 10)
                         //.requestMatchers("/v1/search/**").permitAll()
-
+                        // Permite la ejecuccion Manual para el batch (Req. 50)
+                        .requestMatchers("/v1/admin/batch/**").permitAll()
                         // Cualquier otra solicitud requiere autenticación
                         .anyRequest().authenticated()
                 );
