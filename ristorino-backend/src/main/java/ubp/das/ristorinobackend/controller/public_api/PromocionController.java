@@ -1,5 +1,6 @@
 package ubp.das.ristorinobackend.controller.public_api;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import ubp.das.ristorinobackend.dto.promotion.PromocionDTO;
 import ubp.das.ristorinobackend.service.PromocionService;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,16 @@ public class PromocionController {
         }
 
         return ResponseEntity.ok(promos);
+    }
+
+    // Devuelve una promocion especifica por su codigo.
+    @GetMapping("/{codContenido}")
+    public ResponseEntity<PromocionDTO> getPromotionByCode(@PathVariable String codContenido) {
+        try {
+            PromocionDTO promo = promocionService.obtenerPromocionPorCodigo(codContenido);
+            return ResponseEntity.ok(promo);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

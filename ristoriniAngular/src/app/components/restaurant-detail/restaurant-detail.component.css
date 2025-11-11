@@ -1,0 +1,206 @@
+:root {
+  --brand: #673AB7;      /* morado */
+  --card-bg: #EDE7F6;    /* lavanda */
+  --text: #333;
+  --muted: #888;
+}
+
+/* Contenedor centrado y respirable */
+.detail-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+/* Header del restaurante */
+.detail-header {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 20px;
+  align-items: center;
+  padding: 20px;
+  background: #EDE7F6;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.detail-header img {
+  width: 160px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: #EDE7F6;
+}
+
+.header-content h1 {
+  margin: 0 0 6px 0;
+  font-weight: 400;
+  color: var(--text);
+  border-bottom: 2px solid var(--brand);
+  padding-bottom: 6px;
+  font-size: clamp(1.6rem, 1.2rem + 1vw, 2.2rem);
+}
+
+.header-content .tipo-cocina {
+  margin: 40px;
+  padding: 80px;
+  color: var(--brand);
+  font-weight: 500;
+}
+
+/* Tabs Material: colores del tema */
+/* Fuerza color de texto en todas las pestañas */
+:host ::ng-deep #tabGroup .mat-mdc-tab .mdc-tab__text-label {
+  color: var(--text, #333) !important;
+  opacity: 1 !important;
+  font-size: 0.98rem !important;
+}
+
+/* Activa: morado de marca */
+:host ::ng-deep #tabGroup .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: var(--brand, #673AB7) !important;
+  font-weight: 500;
+  opacity: 1 !important;
+}
+
+/* Línea indicadora también al color de marca (opcional) */
+:host ::ng-deep #tabGroup
+  .mdc-tab-indicator__content--underline {
+  border-color: var(--brand, #673AB7) !important;
+}
+
+/* Fondo del header de tabs transparente (opcional) */
+:host ::ng-deep #tabGroup .mat-mdc-tab-header {
+  background: transparent;
+}
+
+/* Icono (matListItemIcon) en morado */
+:host ::ng-deep .mat-mdc-list-item .mdc-list-item__start,
+:host ::ng-deep .mat-mdc-list-item .mdc-list-item__start .mat-icon {
+  color: #673AB7 !important;
+}
+
+/* Título de la sucursal (matListItemTitle) en morado */
+:host ::ng-deep .mat-mdc-list-item .mdc-list-item__primary-text {
+  color: #673AB7 !important;
+  font-weight: 600;
+  font-size: 1.05rem !important;
+}
+
+:host ::ng-deep .mat-mdc-list-item .mdc-list-item__secondary-text {
+  font-size: 0.97rem !important;   /* dirección, capacidad, etc. */
+}
+
+
+/* Contenido de cada tab */
+.tab-content {
+  padding: 20px;
+  background: #EDE7F6;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-top: 16px;
+}
+
+.tab-content h3 {
+  font-weight: 400;
+  font-size: 1.15rem;
+  color: var(--text);
+  margin: 0 0 10px 0;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--brand);
+}
+
+/* Lista de sucursales */
+::ng-deep .mat-mdc-list-item {
+  border-radius: 8px;
+  background: var(--card-bg);
+  margin-bottom: 10px;
+}
+
+::ng-deep .mat-mdc-list-item .mdc-list-item__start {
+  color: var(--brand);
+}
+
+::ng-deep .mat-mdc-list-item .mdc-list-item__primary-text,
+::ng-deep .mat-mdc-list-item .mdc-list-item__secondary-text {
+  color: var(--text);
+}
+
+/* Grid de promociones dentro del detalle (igual que la landing) */
+.promo-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.promo-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg);
+}
+
+.promo-card mat-card-actions {
+  margin-top: auto;
+  padding: 8px 16px !important;
+}
+
+
+/* Tarjetas de promociones dentro del detalle */
+.promo-card mat-card-title {
+  font-size: 1.05rem;
+}
+.promo-card mat-card-content {
+  font-size: 0.98rem;
+}
+
+mat-card-title, mat-card-subtitle {
+  color: var(--text);
+}
+
+mat-card-subtitle {
+  color: var(--brand);
+  font-weight: 500;
+}
+
+/* Botones (ligero incremento) */
+:host ::ng-deep .mat-mdc-unelevated-button .mdc-button__label,
+:host ::ng-deep .mat-mdc-button .mdc-button__label {
+  font-size: 0.98rem;
+}
+
+/* Spinner / estados vacíos (consistente con la landing) */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Separadores y títulos grandes coherentes con la landing */
+h2 {
+  font-weight: 400;
+  color: var(--text);
+  margin: 40px 0 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--brand);
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .detail-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .detail-header img {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 420px;
+    height: 180px;
+  }
+}

@@ -5,6 +5,7 @@ import ubp.das.ristorinobackend.entity.ContenidoRestauranteId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import java.util.Optional;
 import java.util.List;
 
 @Repository
@@ -22,4 +23,7 @@ public interface ContenidoRestauranteRepository extends JpaRepository<ContenidoR
             "AND c.fechaIniVigencia <= CURRENT_DATE " +
             "AND (c.fechaFinVigencia IS NULL OR c.fechaFinVigencia >= CURRENT_DATE)")
     List<ContenidoRestaurante> findActivePromotionsByRestauranteId(Long restauranteId);
+
+    // Busca una promo por su ID de negocio
+    Optional<ContenidoRestaurante> findByCodContenidoRestaurante(String codContenidoRestaurante);
 }

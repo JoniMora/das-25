@@ -21,6 +21,12 @@ export const routes: Routes = [
             .then(m => m.RestaurantPageComponent)
       },
       {
+        path: 'promotion/:code',
+        loadComponent: () =>
+          import('./pages/promotion-detail/promotion-page/promotion-page.component')
+            .then(m => m.PromotionPageComponent)
+      },
+      {
         path: 'login',
         loadComponent: () =>
           import('./pages/login/login.page/login.page.component')

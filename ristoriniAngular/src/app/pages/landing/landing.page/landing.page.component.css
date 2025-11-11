@@ -3,7 +3,7 @@
   padding: 48px 24px;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .hero h3 {
@@ -22,18 +22,41 @@ h2 {
 }
 
 swiper-container {
-  padding-bottom: 40px;
+  padding-bottom: 40px; 
+}
+
+swiper-container::part(button-next),
+swiper-container::part(button-prev) {
+  color: #673AB7;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+swiper-container::part(button-next):hover,
+swiper-container::part(button-prev):hover {
+  opacity: 1;
+}
+
+swiper-container::part(pagination-bullet-active) {
+  background-color: #673AB7;
 }
 
 .promo-card,
 .restaurant-card {
   height: 100%; 
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
+  background-color: #EDE7F6;
+}
+
+mat-card-subtitle {
+  color: #673AB7;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 mat-card-actions {
-  margin-top: auto;
+  margin-top: auto; 
+  padding: 8px 16px !important;
 }
 
 .restaurant-grid {
@@ -44,13 +67,22 @@ mat-card-actions {
 
 [mat-card-image] {
   height: 200px;
-  object-fit: cover; 
-  background-color: #f0f0f0; 
+  object-fit: cover;
+  background-color: #f0f0f0;
 }
 
-.loading-spinner {
+.loading-spinner,
+.no-results {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 60px;
+  color: #888;
+  font-style: italic;
+}
+
+.section-divider {
+  margin: 40px 0;
+  border: 0;
+  border-top: 1px solid #eee;
 }
