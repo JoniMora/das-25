@@ -7,7 +7,7 @@ describe('RestaurantsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule], // necesario para servicios HTTP
+      imports: [HttpClientTestingModule],
       providers: [RestaurantsService]
     });
     service = TestBed.inject(RestaurantsService);
@@ -17,7 +17,6 @@ describe('RestaurantsService', () => {
     expect(service).toBeTruthy();
   });
 
-  // Verifica que el método getById exista
   it('should have getById method', () => {
     expect(service.getById).toBeDefined();
   });

@@ -5,16 +5,18 @@ import { AuthService } from '../../service/auth.service';
 
 @Component({
   standalone: true,
-  selector: 'app-root',
+  selector: 'app-shell', 
   imports: [CommonModule, RouterLink, RouterOutlet],
   templateUrl: './app-shell.component.html',
+  styleUrls: ['./app-shell.component.css']
 })
 export class AppShellComponent {
   private router = inject(Router);
-  public auth = inject(AuthService);
+  
+  public auth = inject(AuthService); 
   
   constructor() {
-    console.log();
+    console.log('AppShellComponent cargado.');
   }
 
   logout(): void {
@@ -22,4 +24,3 @@ export class AppShellComponent {
     this.router.navigateByUrl('/');
   }
 }
-

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -14,16 +14,17 @@ import { RestauranteResumenDTO } from '../../../models/restaurante-resumen.dto';
   selector: 'app-landing-page',
   imports: [
     CommonModule, 
-    RouterLink,
-    MatCardModule,
-    MatButtonModule,
-    MatProgressSpinnerModule
-  ],
+    RouterLink, 
+    MatCardModule, 
+    MatButtonModule, 
+    MatProgressSpinnerModule,
+  ], 
   templateUrl: './landing.page.component.html',
-  styleUrls: ['./landing.page.component.css']
+  styleUrls: ['./landing.page.component.css'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
+
 export class LandingPageComponent implements OnInit {
-  
   public promotions$!: Observable<PromocionDTO[]>;
   public restaurants$!: Observable<RestauranteResumenDTO[]>;
 
