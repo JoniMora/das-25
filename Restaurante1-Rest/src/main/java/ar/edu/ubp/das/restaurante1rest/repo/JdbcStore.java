@@ -48,7 +48,7 @@ public class JdbcStore implements Store {
 
     // ===================== SLOTS BASE =====================
     @Override
-    public List<String> getBaseSlots(int branchId) {
+    public List<String> getBaseSlots(String branchId) {
 
         final String sql = """
             SELECT s.hhmm
@@ -60,14 +60,14 @@ public class JdbcStore implements Store {
             ORDER BY s.hhmm
             """;
         return jdbc.query(sql, ps -> {
-            ps.setInt(1, branchId);
-            ps.setInt(2, branchId);
+            ps.setString(1, branchId);
+            ps.setString(2, branchId);
         }, (rs, i) -> rs.getString("hhmm"));
     }
 
     // ===================== SLOTS TOMADOS =====================
     @Override
-    public Set<String> getTakenSlots(int branchId, LocalDate date) {
+    public Set<String> getTakenSlots(String branchId, LocalDate date) {
         final String sql = """
         SELECT CONVERT(char(5), r.hora_reserva, 108) AS hhmm
         FROM dbo.reservas_sucursales r
@@ -77,8 +77,8 @@ public class JdbcStore implements Store {
           AND r.cancelada       = 0
         """;
         List<String> list = jdbc.query(sql, ps -> {
-            ps.setInt(1, branchId);
-            ps.setInt(2, branchId);
+            ps.setString(1, branchId);
+            ps.setString(2, branchId);
             ps.setDate(3, java.sql.Date.valueOf(date));
         }, (rs, i) -> rs.getString("hhmm"));
         return new HashSet<>(list);
@@ -86,10 +86,10 @@ public class JdbcStore implements Store {
 
     // ===================== INSERT RESERVA =====================
     @Override
-    public long insertReservation(int branchId, LocalDate date, LocalTime time,
-                                  int adults, int kids, int clientId, Integer zoneId) {
+    public long insertReservation(String branchId, LocalDate date, LocalTime time,
+                                  int adults, int kids, String clientId, String zoneId) {
         final String sql = """
-        DECLARE @rest INT = (
+        DECLARE @rest VARCHAR(10) = (
           SELECT TOP 1 s.nro_restaurante
           FROM dbo.sucursales s
           WHERE s.nro_sucursal = ?
@@ -120,16 +120,16 @@ public class JdbcStore implements Store {
     """;
 
         Long cod = jdbc.query(sql, ps -> {
-            ps.setInt(1, branchId);
-            ps.setInt(2, branchId);
+            ps.setString(1, branchId);
+            ps.setString(2, branchId);
             ps.setDate(3, java.sql.Date.valueOf(date));
             ps.setString(4, time.toString());
 
-            ps.setInt(5, clientId);
+            ps.setString(5, clientId);
             ps.setDate(6, java.sql.Date.valueOf(date));
-            ps.setInt(7, branchId);
+            ps.setString(7, branchId);
             if (zoneId == null) ps.setNull(8, java.sql.Types.INTEGER);
-            else                ps.setInt(8, zoneId);
+            else                ps.setString(8, zoneId);
             ps.setString(9, time.toString());
             ps.setInt(10, adults);
             ps.setInt(11, kids);

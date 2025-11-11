@@ -16,7 +16,7 @@ public class AvailabilityController {
 
     @GetMapping
     public AvailabilityResponse get(
-            @PathVariable int branchId,
+            @PathVariable String branchId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             @RequestParam int adults,
             @RequestParam(defaultValue = "0") int kids

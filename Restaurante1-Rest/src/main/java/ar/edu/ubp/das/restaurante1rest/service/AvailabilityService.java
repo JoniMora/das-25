@@ -13,7 +13,7 @@ public class AvailabilityService {
     private final Store store;
     public AvailabilityService(Store store) { this.store = store; }
 
-    public AvailabilityResponse getAvailability(int branchId, LocalDate date, int adults, int kids) {
+    public AvailabilityResponse getAvailability(String branchId, LocalDate date, int adults, int kids) {
         Assert.isTrue(adults >= 1, "Debe haber al menos 1 adulto");
         Assert.isTrue(!date.isBefore(LocalDate.now()), "La fecha no puede ser anterior a hoy");
 

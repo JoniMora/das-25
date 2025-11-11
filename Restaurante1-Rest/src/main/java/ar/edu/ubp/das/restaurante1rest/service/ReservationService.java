@@ -18,25 +18,39 @@ public class ReservationService {
 
     public ReservationService(Store store){ this.store = store; }
 
-    public ReservationResponse create(int branchId, ReservationRequest req){
-        LocalDate date = LocalDate.parse(req.date(), D);
+    public ReservationResponse create(String branchId, ReservationRequest req){
+        // ANTES: req.date()
+        LocalDate date = LocalDate.parse(req.getDate(), D);
         if (date.isBefore(LocalDate.now()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La fecha no puede ser anterior a hoy");
 
-        if (req.adults() < 1)
+        // ANTES: req.adults()
+        if (req.getAdults() < 1)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Debe haber al menos 1 adulto");
 
-        LocalTime time = LocalTime.parse(req.time(), T);
+        // ANTES: req.time()
+        LocalTime time = LocalTime.parse(req.getTime(), T);
 
         var base = store.getBaseSlots(branchId);
-        if (!base.contains(req.time()))
+        // ANTES: req.time()
+        if (!base.contains(req.getTime()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Horario fuera de turno");
 
         var taken = store.getTakenSlots(branchId, date);
-        if (taken.contains(req.time()))
+        // ANTES: req.time()
+        if (taken.contains(req.getTime()))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Horario ocupado");
 
-        long cod = store.insertReservation(branchId, date, time, req.adults(), req.kids(), req.clientId(), req.zoneId());
+        // ANTES: req.adults(), req.kids(), req.clientId(), req.zoneId()
+        long cod = store.insertReservation(
+                branchId,
+                date,
+                time,
+                req.getAdults(),
+                req.getKids(),
+                req.getClientId(),
+                req.getZoneId()
+        );
         return new ReservationResponse(cod, branchId, date.format(D), time.format(T));
     }
 

@@ -17,7 +17,7 @@ public class ReservationController {
 
     @PostMapping("/branches/{branchId}/reservations")
     @ResponseStatus(HttpStatus.CREATED)
-    public ReservationResponse create(@PathVariable int branchId, @RequestBody ReservationRequest req){
+    public ReservationResponse create(@PathVariable String  branchId, @RequestBody ReservationRequest req){
         return svc.create(branchId, req);
     }
 
