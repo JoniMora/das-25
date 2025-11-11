@@ -26,4 +26,8 @@ export class RestaurantService {
   getRestaurantDetail(id: number): Observable<RestauranteDetalleDTO> {
     return this.http.get<RestauranteDetalleDTO>(`${this.apiUrl}/v1/restaurants/${id}`);
   }
+
+  getPromotionByCode(code: string): Observable<PromocionDTO> {
+    return this.http.get<PromocionDTO>(`${this.apiUrl}/v1/promotions/${code}`);
+  }
 }

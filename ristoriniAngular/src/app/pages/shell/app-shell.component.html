@@ -1,11 +1,17 @@
 <header class="app-header">
   <div class="header-content">
     <h1 class="logo"><a routerLink="/" class="logo-link">Ristorino</a></h1>
-    <nav class="navigation"><a routerLink="/" class="nav-link">Inicio</a></nav>
+  
     <div class="auth-actions">
-      <a *ngIf="!auth.isLoggedIn()" routerLink="/login" class="nav-link">Ingresar</a>
-      <button *ngIf="auth.isLoggedIn()" class="nav-link" (click)="logout()">Cerrar sesión</button>
+      <ng-container *ngIf="(auth.isLoggedIn$ | async) === true; else loggedOut">
+        <button class="nav-link" (click)="logout()">Cerrar sesión</button>
+      </ng-container>
+
+      <ng-template #loggedOut>
+        <a routerLink="/login" class="nav-link">Ingresar</a>
+      </ng-template>
     </div>
+
   </div>
 </header>
 
@@ -14,6 +20,7 @@
 </main>
 
 <footer class="app-footer">
-  <div class="footer-content"></div>
+  <div class="footer-content">
+    <p>&copy; 2025 Ristorino. Todos los derechos reservados.</p>
+  </div>
 </footer>
-

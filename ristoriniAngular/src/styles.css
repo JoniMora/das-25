@@ -1,95 +1,99 @@
+@import '@angular/material/prebuilt-themes/purple-green.css';
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
+html, body { 
+  height: 100%; 
 }
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  color: #333;
-
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color: #f3e5f5;
 }
 
 .app-header {
-  background: #2c3e50;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1001; 
+  background-color: #7b1fa2;
   color: white;
-  padding: 1rem 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .header-content {
-  max-width: 1200px;
+  width: 70%;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 1rem;
+  height: 64px;
 }
 
 .logo {
+  margin: 0;
+  font-size: 1.3em;
+  font-weight: 500;
+}
+
+.logo-link {
+  color: white;
+  text-decoration: none;
+  padding: 8px 0;
+  margin-right: 20px;
+  transition: opacity 0.2s ease;
+}
+.logo-link:hover {
+  opacity: 0.8;
+}
+
+.navigation {
+  flex: 1 1 auto;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.auth-actions .nav-link,
+.auth-actions button.nav-link {
+  font-family: inherit;
+  font-size: 0.9em;
+  font-weight: 500;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.7); 
   cursor: pointer;
-  font-size: 1.8rem;
-  font-weight: bold;
-
 }
-.logo a {
-    color: white;
-    text-decoration: none;
+.auth-actions button.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-/*  Estilo para todos los enlaces y botones de Navegación */
-.header-content a,
-.header-content button {
-    color: white;
-    text-decoration: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
+
+.main-content {
+  width: 70%;
+  margin: 0 auto;
+  padding: 32px 0;      
+  flex: 1; 
 }
 
-.header-content a:visited,
-.header-content a:hover {
-    color: white;
+.app-footer {
+  width: 100%;
+  background-color: #7b1fa2;
+  color: white;
+  padding: 40px 0;
+  margin-top: 48px;
 }
 
-.promotions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding: 1rem 0;
-}
-
-.promotion-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.promotion-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.loading, .error {
+.footer-content {
+  width: 70%;
+  margin: 0 auto;
   text-align: center;
-  padding: 2rem;
-  font-size: 1.1rem;
 }
-
-.error {
-  color: #e74c3c;
-}
-
-.h3-normal {
-
-    font-weight: normal;
-}
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

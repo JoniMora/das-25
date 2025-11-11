@@ -1,0 +1,30 @@
+<div class="promo-detail-container" *ngIf="promotion$ | async as promo; else loading">
+
+  <mat-card class="detail-card">
+    <img mat-card-image [src]="promo.imagenUrl || 'assets/images/default-promo.png'" alt="{{ promo.titulo }}">
+    
+    <mat-card-header>
+      <mat-card-title>{{ promo.titulo }}</mat-card-title>
+      <mat-card-subtitle class="offered-by">Ofrecido por: 
+        <a [routerLink]="['/restaurant', promo.restauranteId]">{{ promo.nombreRestaurante }}</a>
+      </mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <p>{{ promo.descripcion }}</p>
+    </mat-card-content>
+    
+    <mat-card-actions>
+      <a mat-button class="view-restaurant-btn" [routerLink]="['/restaurants', promo.restauranteId]">
+        Ver Restaurante
+      </a>
+    </mat-card-actions>
+  </mat-card>
+
+</div>
+
+<ng-template #loading>
+  <div class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+</ng-template>

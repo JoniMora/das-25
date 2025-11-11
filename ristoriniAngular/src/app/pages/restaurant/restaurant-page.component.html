@@ -1,3 +1,14 @@
-<ng-container *ngIf="restaurant$ | async as restaurant">
+<!-- <ng-container *ngIf="restaurant$ | async as restaurant">
+  <app-restaurant-detail [restaurant]="restaurant"></app-restaurant-detail>
+</ng-container> -->
+
+<ng-container *ngIf="restaurant$ | async as restaurant; else loading">
   <app-restaurant-detail [restaurant]="restaurant"></app-restaurant-detail>
 </ng-container>
+
+<!-- Estado de Carga -->
+<ng-template #loading>
+  <div class_name="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+</ng-template>

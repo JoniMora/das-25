@@ -9,7 +9,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(
       withInterceptors([authInterceptor])
-        // Aquí puedes agregar tus interceptores
     )
   ]
 };
