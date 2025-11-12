@@ -1,7 +1,5 @@
 package ubp.das.ristorinobackend.service;
 
-
-import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 import ubp.das.ristorinobackend.dto.promotion.ClickRequest;
@@ -13,7 +11,6 @@ import ubp.das.ristorinobackend.entity.ContenidoRestaurante;
 import ubp.das.ristorinobackend.repository.ClienteRepository;
 import ubp.das.ristorinobackend.repository.ContenidoClickRepository;
 import ubp.das.ristorinobackend.repository.ContenidoRestauranteRepository;
-import ubp.das.ristorinobackend.entity.ContenidoRestaurante;
 import org.springframework.stereotype.Service;
 import ubp.das.ristorinobackend.entity.ContenidoClick;
 import java.time.LocalDateTime;
