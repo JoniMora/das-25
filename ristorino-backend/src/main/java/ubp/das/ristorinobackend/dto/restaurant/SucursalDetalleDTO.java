@@ -8,11 +8,11 @@ import ubp.das.ristorinobackend.entity.SucursalRestaurante;
 @Builder
 public class SucursalDetalleDTO {
 
-    private Integer nroSucursal;
+    private Short nroSucursal;
     private String nombre;
     private String direccion;
     private String barrio;
-    private Integer capacidad;
+    private Short capacidad;
 
     public static SucursalDetalleDTO fromEntity(SucursalRestaurante entity) {
         return SucursalDetalleDTO.builder()

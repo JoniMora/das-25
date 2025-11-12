@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,6 +20,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -26,8 +28,9 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter) {
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter, UserDetailsService userDetailsService  ) {
         this.jwtAuthFilter = jwtAuthFilter;
+
     }
 
     @Bean
@@ -35,7 +38,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+   @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
@@ -57,11 +60,13 @@ public class SecurityConfig {
                         .requestMatchers("/v1/restaurants/**").permitAll()
 
                         // Permite acceso público a las promociones (Req. 12)
-                        .requestMatchers("/v1/promotions/**").permitAll()
-
+                        //Permiten q ususarios No registrados puedan interactuar
+                        .requestMatchers(HttpMethod.GET, "/v1/promotions/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/promotions/click").permitAll()
                         // Permite acceso público a la búsqueda (Req. 10)
                         //.requestMatchers("/v1/search/**").permitAll()
-
+                        // Permite la ejecuccion Manual para el batch (Req. 50)
+                        .requestMatchers("/v1/admin/batch/**").permitAll()
                         // Cualquier otra solicitud requiere autenticación
                         .anyRequest().authenticated()
                 );

@@ -9,11 +9,11 @@ import java.util.Set;
 
 public interface Store  {
     List<BranchDto> listEnabledBranches();
-    List<String> getBaseSlots(int branchId);
-    Set<String> getTakenSlots(int branchId, LocalDate date);
+    List<String> getBaseSlots(String branchId);
+    Set<String> getTakenSlots(String branchId, LocalDate date);
 
-    long insertReservation(int branchId, LocalDate date, LocalTime time,
-                           int adults, int kids, int clientId, Integer zoneId);
+    long insertReservation(String branchId, LocalDate date, LocalTime time,
+                           int adults, int kids, String clientId, String zoneId);
 
     int cancelReservation(long codReserva);
 }

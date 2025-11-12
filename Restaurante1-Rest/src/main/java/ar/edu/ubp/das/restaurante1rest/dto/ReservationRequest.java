@@ -1,10 +1,15 @@
 package ar.edu.ubp.das.restaurante1rest.dto;
 
-public record ReservationRequest (
-        String date,
-        String time,
-        int adults,
-        int kids,
-        int clientId,
-        Integer zoneId
-){}
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class ReservationRequest {
+    private String date;
+    private String time;
+    private int adults;
+    private int kids;
+    private String clientId;
+    private String zoneId;
+}

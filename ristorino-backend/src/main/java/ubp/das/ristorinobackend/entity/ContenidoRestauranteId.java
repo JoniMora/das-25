@@ -13,7 +13,7 @@ public class ContenidoRestauranteId implements Serializable {
     private Long nroRestaurante;
 
     @Column(name = "nro_idioma")
-    private Integer nroIdioma;
+    private String nroIdioma;
 
     @Column(name = "nro_contenido")
     private Integer nroContenido;

@@ -10,8 +10,8 @@ import java.io.Serializable;
 public class DominioCategoriaPreferenciaId implements Serializable {
 
     @Column(name = "cod_categoria")
-    private Integer codCategoria;
+    private String codCategoria;
 
     @Column(name = "nro_valor_dominio")
-    private Integer nroValorDominio;
+    private String nroValorDominio;
 }

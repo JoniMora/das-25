@@ -13,11 +13,11 @@ public class PreferenciaRestauranteId implements Serializable {
     private Long nroRestaurante;
 
     @Column(name = "cod_categoria")
-    private Integer codCategoria;
+    private String codCategoria;
 
     @Column(name = "nro_valor_dominio")
-    private Integer nroValorDominio;
+    private String nroValorDominio;
 
     @Column(name = "nro_preferencia")
-    private Integer nroPreferencia;
+    private Short nroPreferencia;
 }

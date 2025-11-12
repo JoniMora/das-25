@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 public class CategoriaPreferencia {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_categoria")
-    private Integer codCategoria;
+    private String codCategoria;
 
     @Column(name = "nom_categoria", nullable = false)
     private String nomCategoria;
