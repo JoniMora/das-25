@@ -4,13 +4,13 @@
   <div class="grid">
     <a *ngFor="let p of promotions"
        class="card"
-       [routerLink]="['/restaurants', p.restaurant.id]"
+       [routerLink]="['/restaurants', p.restauranteId]"
        (click)="onPromotionClick(p)">
-      <img *ngIf="p.imageUrl" [src]="p.imageUrl" alt="{{ p.name }}" />
+      <img *ngIf="p.imagenUrl" [src]="p.imagenUrl" alt="{{ p.titulo }}" />
       <div class="body">
-        <div class="brand">{{ p.brandName }}</div>
-        <h3>{{ p.name }}</h3>
-        <div class="dates">{{ p.startDate | date }} – {{ p.endDate | date }}</div>
+        <div class="brand">{{ p.nombreRestaurante }}</div>
+        <h3>{{ p.titulo }}</h3>
+        <!--<div class="dates">{{ p.fechaInicio | date }} – {{ p.fechaFin | date }}</div>-->
       </div>
     </a>
   </div>
