@@ -35,5 +35,8 @@ public class SucursalRestaurante {
     private String barrio;
 
     @Column(name = "total_comensales")
-    private Integer totalComensales;
+    private Short totalComensales;
+
+    @Column(name = "nro_localidad")
+    private String nroLocalidad;
 }

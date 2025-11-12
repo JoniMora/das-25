@@ -22,11 +22,11 @@ public class BatchController {
         try {
 
             batchService.procesarYNotificarClicks();
-
             return ResponseEntity.ok(Map.of("message", "Proceso batch de notificación de clics ejecutado exitosamente."));
 
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Map.of("error", "Fallo al ejecutar el batch: " + e.getMessage()));
         }
     }
+
 }

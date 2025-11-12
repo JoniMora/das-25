@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/notificaciones")
+@RequestMapping("/api/v1/notifications")
 public class NotificationController {
     @PostMapping("/clicks")
     public ResponseEntity<Map<String, String>> receiveClickNotification(

@@ -13,5 +13,5 @@ public class SucursalRestauranteId implements Serializable {
     private Long nroRestaurante;
 
     @Column(name = "nro_sucursal")
-    private Integer nroSucursal;
+    private Short nroSucursal;
 }

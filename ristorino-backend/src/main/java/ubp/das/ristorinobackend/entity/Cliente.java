@@ -31,7 +31,7 @@ public class Cliente {
     private String telefono;
 
     @Column(name = "nro_localidad")
-    private Integer nroLocalidad;
+    private String nroLocalidad;
 
     @Column(name = "habilitado")
     private Boolean habilitado = true;
