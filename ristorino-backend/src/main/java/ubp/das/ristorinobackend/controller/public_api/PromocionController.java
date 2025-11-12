@@ -1,9 +1,11 @@
 package ubp.das.ristorinobackend.controller.public_api;
 
+
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ubp.das.ristorinobackend.dto.promotion.ClickRequest;
+import org.springframework.web.bind.annotation.PathVariable;
 import ubp.das.ristorinobackend.dto.promotion.PromocionDTO;
 import ubp.das.ristorinobackend.service.PromocionService;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,16 @@ public class PromocionController {
             return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Click registrado"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
+        }
+    }
+    // Devuelve una promocion especifica por su codigo.
+    @GetMapping("/{codContenido}")
+    public ResponseEntity<PromocionDTO> getPromotionByCode(@PathVariable String codContenido) {
+        try {
+            PromocionDTO promo = promocionService.obtenerPromocionPorCodigo(codContenido);
+            return ResponseEntity.ok(promo);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }

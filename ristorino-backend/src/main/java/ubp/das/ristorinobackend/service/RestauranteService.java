@@ -2,11 +2,13 @@ package ubp.das.ristorinobackend.service;
 
 import org.springframework.transaction.annotation.Transactional;
 import ubp.das.ristorinobackend.dto.promotion.PromocionDTO;
+import ubp.das.ristorinobackend.dto.restaurant.RestauranteResumenDTO;
 import ubp.das.ristorinobackend.dto.restaurant.RestauranteDetalleDTO;
 import ubp.das.ristorinobackend.dto.restaurant.SucursalDetalleDTO;
 import ubp.das.ristorinobackend.entity.Restaurante;
 import ubp.das.ristorinobackend.repository.RestauranteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +33,8 @@ public class RestauranteService {
         RestauranteDetalleDTO dto = new RestauranteDetalleDTO();
         dto.setId(restaurante.getNroRestaurante());
         dto.setNombre(restaurante.getRazonSocial());
+        dto.setDescripcion(restaurante.getDescripcion());
+        dto.setImagenUrl(restaurante.getImagenUrl());
 
         List<SucursalDetalleDTO> sucursalesDTO = restaurante.getSucursales().stream()
                 .map(SucursalDetalleDTO::fromEntity)
@@ -51,11 +55,27 @@ public class RestauranteService {
         } else {
             dto.setTipoCocina(tipoComida);
         }
-
-        // Mantenemos esta simulación por ahora
-        dto.setDescripcion("Descripción simulada de La Bella Pizza.");
-        dto.setImagenUrl(null); // Img Perfil
-
         return dto;
+    }
+
+    // Obtiene una lista resumida de todos los restaurantes.
+    @Transactional(readOnly = true)
+    public List<RestauranteResumenDTO> obtenerRestaurantesResumen() {
+        List<Restaurante> restaurantes = restauranteRepository.findAll(Sort.by(Sort.Direction.ASC, "razonSocial"));
+
+        return restaurantes.stream().map(restaurante -> {
+
+            String tipoComida = restaurante.getPreferencias().stream()
+                    .filter(pref -> pref.getDominio().getCategoria().getCodCategoria().equals(CATEGORIA_ID_TIPO_COMIDA))
+                    .map(pref -> pref.getDominio().getNomValorDominio())
+                    .distinct()
+                    .collect(Collectors.joining(", "));
+
+            if (tipoComida.isEmpty()) {
+                tipoComida = "No especificado";
+            }
+
+            return RestauranteResumenDTO.fromEntity(restaurante, tipoComida);
+        }).collect(Collectors.toList());
     }
 }

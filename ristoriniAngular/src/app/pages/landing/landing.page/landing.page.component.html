@@ -2,22 +2,78 @@
   <h3 class="h3-normal">Descubrí promociones de restaurantes en Córdoba.</h3>
 </section>
 
-<section class="search">
-  <h2>Promociones</h2>
+<section class="promotions">
+  <h2>Promociones Destacadas</h2>
+  
+  <ng-container *ngIf="promotions$ | async as promotions; else loadingPromos">
+    
+    <swiper-container *ngIf="promotions.length > 0"
+      [slidesPerView]="1" [spaceBetween]="20" [pagination]="{ clickable: true }" [navigation]="true"
+      [breakpoints]="{ '600': { 'slidesPerView': 2 }, '960': { 'slidesPerView': 3 } }">
+      
+      <swiper-slide *ngFor="let promo of promotions">
+        <mat-card class="promo-card">
+          <img mat-card-image [src]="promo.imagenUrl || 'assets/images/default-promo.png'" alt="{{ promo.titulo }}">
+          <mat-card-header>
+            <mat-card-title>{{ promo.titulo }}</mat-card-title>
+            <mat-card-subtitle>{{ promo.nombreRestaurante }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ promo.descripcion }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <a mat-flat-button color="primary" [routerLink]="['/promotion', promo.codContenido]">
+              VER PROMOCIÓN
+            </a>
+          </mat-card-actions>
+        </mat-card>
+      </swiper-slide>
+    </swiper-container>
 
-  <div class="toolbar">
-    <input type="search" placeholder="Buscar..." [(ngModel)]="query" />
-    <button (click)="load()">Buscar</button>
-  </div>
+    <div *ngIf="promotions.length === 0" class="no-results">
+      No hay promociones disponibles en este momento.
+    </div>
 
-  <div *ngIf="loading">Cargando…</div>
-  <app-promotion-list *ngIf="!loading" [promotions]="promotions"></app-promotion-list>
+  </ng-container>
+
+  <ng-template #loadingPromos>
+    <div class="loading-spinner">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  </ng-template>
 </section>
 
+<hr class="section-divider">
 
+<section class="restaurant-list">
+  <h2>Nuestros Restaurantes</h2>
+  
+  <ng-container *ngIf="restaurants$ | async as restaurants; else loadingRestos">
+    
+    <div *ngIf="restaurants.length > 0" class="restaurant-grid">
+      <mat-card class="restaurant-card" *ngFor="let resto of restaurants">
+        <img mat-card-image [src]="resto.imagenUrl || 'assets/images/default-resto.png'" alt="{{ resto.nombre }}">
+        <mat-card-header>
+          <mat-card-title>{{ resto.nombre }}</mat-card-title>
+          <mat-card-subtitle>{{ resto.tipoCocina }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+          <a mat-flat-button color="primary" [routerLink]="['/restaurants', resto.id]">
+            VER DETALLE
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
 
+    <div *ngIf="restaurants.length === 0" class="no-results">
+      No se encontraron restaurantes.
+    </div>
 
+  </ng-container>
 
-
-
-
+  <ng-template #loadingRestos>
+    <div class="loading-spinner">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  </ng-template>
+</section>

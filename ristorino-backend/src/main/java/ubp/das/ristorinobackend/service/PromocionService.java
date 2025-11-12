@@ -1,15 +1,19 @@
 package ubp.das.ristorinobackend.service;
 
+
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 import ubp.das.ristorinobackend.dto.promotion.ClickRequest;
+import org.springframework.transaction.annotation.Transactional;
+
 import ubp.das.ristorinobackend.dto.promotion.PromocionDTO;
 import ubp.das.ristorinobackend.entity.Cliente;
 import ubp.das.ristorinobackend.entity.ContenidoRestaurante;
 import ubp.das.ristorinobackend.repository.ClienteRepository;
 import ubp.das.ristorinobackend.repository.ContenidoClickRepository;
 import ubp.das.ristorinobackend.repository.ContenidoRestauranteRepository;
+import ubp.das.ristorinobackend.entity.ContenidoRestaurante;
 import org.springframework.stereotype.Service;
 import ubp.das.ristorinobackend.entity.ContenidoClick;
 import java.time.LocalDateTime;
@@ -63,5 +67,14 @@ public class PromocionService {
             }
         } catch (Exception e) {}
         clickRepository.save(click);
+    }
+
+    @Transactional(readOnly = true)
+    public PromocionDTO obtenerPromocionPorCodigo(String codContenido) {
+
+        ContenidoRestaurante contenido = repository.findByCodContenidoRestaurante(codContenido)
+                .orElseThrow(() -> new RuntimeException("Promoción no encontrada: " + codContenido));
+
+        return PromocionDTO.fromEntity(contenido);
     }
 }

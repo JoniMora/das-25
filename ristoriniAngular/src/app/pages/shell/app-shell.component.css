@@ -1,14 +1,25 @@
-/* src/app/pages/shell/app-shell.component.css (CÓDIGO ORIGINAL) */
-
 .header-content {
-    display: flex;
-    align-items: center;
-}
-
-.navigation {
-    margin-left: 1rem;
+	justify-content: space-between;
+	gap: 16px;
 }
 
 .auth-actions {
-    margin-left: auto;
+	display: flex;
+	gap: 8px;
+	align-items: center;
 }
+
+.auth-actions .nav-link,
+.auth-actions button.nav-link {
+	background: none;
+	border: 1px solid rgba(255,255,255,0.0);
+	color: white;
+	padding: 6px 10px;
+	border-radius: 4px;
+}
+
+.auth-actions .nav-link:hover,
+.auth-actions button.nav-link:hover {
+	background-color: rgba(255,255,255,0.08);
+}
+

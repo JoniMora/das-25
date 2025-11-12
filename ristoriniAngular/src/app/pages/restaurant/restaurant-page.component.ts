@@ -1,37 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-
-import { RestaurantsService } from '../../service/restaurants.service';
-import { Restaurant } from '../../models/restaurant.model';
+import { Observable, switchMap } from 'rxjs';
+import { RestaurantService } from '../../service/restaurant.service';
+import { RestauranteDetalleDTO } from '../../models/restaurante-detalle.dto';
 import { RestaurantDetailComponent } from '../../components/restaurant-detail/restaurant-detail.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-  standalone: true,
   selector: 'app-restaurant-page',
-  imports: [CommonModule, RestaurantDetailComponent],
+  standalone: true,
+  imports: [CommonModule, RestaurantDetailComponent, MatProgressSpinnerModule],
   templateUrl: './restaurant-page.component.html',
   styleUrls: ['./restaurant-page.component.css']
 })
 export class RestaurantPageComponent implements OnInit {
-  restaurant?: Restaurant;
+
+  public restaurant$!: Observable<RestauranteDetalleDTO>;
 
   constructor(
     private route: ActivatedRoute,
-    private restaurantsService: RestaurantsService
+    private restaurantService: RestaurantService
   ) {}
 
-  ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.restaurantsService.getById(id).subscribe({
-        next: (restaurant: Restaurant) => {
-          this.restaurant = restaurant;
-        },
-        error: (error) => {
-          console.error('Error loading restaurant:', error);
+  ngOnInit(): void {
+    this.restaurant$ = this.route.paramMap.pipe(
+      switchMap(params => {
+        const id = Number(params.get('id'));
+        if (!id) {
+          throw new Error('ID de Restaurante no encontrado');
         }
-      });
-    }
+        return this.restaurantService.getRestaurantDetail(id);
+      })
+    );
   }
 }

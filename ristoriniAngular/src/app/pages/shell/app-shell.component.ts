@@ -1,22 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterOutlet } from '@angular/router'; // ¡Importación necesaria!
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 
 @Component({
   standalone: true,
-  selector: 'app-root',
+  selector: 'app-shell', 
   imports: [CommonModule, RouterLink, RouterOutlet],
   templateUrl: './app-shell.component.html',
+  styleUrls: ['./app-shell.component.css']
 })
 export class AppShellComponent {
-  // ✅ Usamos 'inject' para el Router (más moderno)
   private router = inject(Router);
-  public auth = inject(AuthService);
-  // ✅ Usamos inyección tradicional SÓLO para AuthService si queremos que sea pública en el template
-  // Opcionalmente, puedes usar 'inject' también para auth: public auth = inject(AuthService);
+  
+  public auth = inject(AuthService); 
+  
   constructor() {
-    console.log();
+    console.log('AppShellComponent cargado.');
   }
 
   logout(): void {
@@ -24,4 +24,3 @@ export class AppShellComponent {
     this.router.navigateByUrl('/');
   }
 }
-

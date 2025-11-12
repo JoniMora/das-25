@@ -1,0 +1,76 @@
+.promo-detail-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.detail-card {
+  margin-top: 32px;
+  background-color: #EDE7F6;
+}
+
+.offered-by {
+  font-style: italic;
+  color: #333;
+}
+
+[mat-card-image] {
+  max-height: 400px;
+  object-fit: cover;
+}
+
+mat-card-header {
+  padding: 24px 24px 16px 24px;
+}
+
+mat-card-title {
+  font-size: 2.2em;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+mat-card-subtitle {
+  font-size: 1.1em;
+  margin-top: 8px;
+}
+
+mat-card-subtitle a {
+  color: #673AB7;
+  text-decoration: none;
+  font-weight: 500;
+}
+mat-card-subtitle a:hover {
+  text-decoration: underline;
+}
+
+mat-card-content p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #333;
+  padding: 0 24px;
+}
+
+mat-card-actions {
+  padding: 16px 24px !important;
+  display: flex;
+  gap: 10px;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+}
+
+.view-restaurant-btn {
+  background-color: #673AB7;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.view-restaurant-btn:hover {
+  background-color: #5E35B1;
+}

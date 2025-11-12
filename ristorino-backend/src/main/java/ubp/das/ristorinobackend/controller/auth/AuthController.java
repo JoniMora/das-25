@@ -6,6 +6,7 @@ import ubp.das.ristorinobackend.dto.auth.LoginRequest;
 import ubp.das.ristorinobackend.service.AuthService;
 import ubp.das.ristorinobackend.security.JwtProvider;
 import ubp.das.ristorinobackend.security.TokenBlacklistService;
+import ubp.das.ristorinobackend.dto.auth.LoginResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +39,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         try {
-            String jwtToken = authService.autenticarCliente(request);
-
-            return ResponseEntity.ok(jwtToken);
+            LoginResponse response = authService.autenticarCliente(request);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return new ResponseEntity<>("Credenciales inválidas.", HttpStatus.UNAUTHORIZED);
         }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Promotion } from '../models/promotion.model';
+import { Promotion } from '../models/promocion.dto';
 
 @Injectable({ providedIn: 'root' })
 export class PromotionsService {
