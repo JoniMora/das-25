@@ -4,13 +4,13 @@
 
 <section class="promotions">
   <h2>Promociones Destacadas</h2>
-  
+
   <ng-container *ngIf="promotions$ | async as promotions; else loadingPromos">
-    
+
     <swiper-container *ngIf="promotions.length > 0"
       [slidesPerView]="1" [spaceBetween]="20" [pagination]="{ clickable: true }" [navigation]="true"
       [breakpoints]="{ '600': { 'slidesPerView': 2 }, '960': { 'slidesPerView': 3 } }">
-      
+
       <swiper-slide *ngFor="let promo of promotions">
         <mat-card class="promo-card">
           <img mat-card-image [src]="promo.imagenUrl || 'assets/images/default-promo.png'" alt="{{ promo.titulo }}">
@@ -22,7 +22,7 @@
             <p>{{ promo.descripcion }}</p>
           </mat-card-content>
           <mat-card-actions>
-            <a mat-flat-button color="primary" [routerLink]="['/promotion', promo.codContenido]">
+            <a mat-flat-button color="primary" (click)="onPromotionClick(promo)">
               VER PROMOCIÓN
             </a>
           </mat-card-actions>
@@ -47,9 +47,9 @@
 
 <section class="restaurant-list">
   <h2>Nuestros Restaurantes</h2>
-  
+
   <ng-container *ngIf="restaurants$ | async as restaurants; else loadingRestos">
-    
+
     <div *ngIf="restaurants.length > 0" class="restaurant-grid">
       <mat-card class="restaurant-card" *ngFor="let resto of restaurants">
         <img mat-card-image [src]="resto.imagenUrl || 'assets/images/default-resto.png'" alt="{{ resto.nombre }}">
@@ -58,7 +58,7 @@
           <mat-card-subtitle>{{ resto.tipoCocina }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
-          <a mat-flat-button color="primary" [routerLink]="['/restaurants', resto.id]">
+        <a mat-flat-button color="primary" [routerLink]="['/restaurants', resto.id]">
             VER DETALLE
           </a>
         </mat-card-actions>
