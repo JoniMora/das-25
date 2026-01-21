@@ -20,78 +20,47 @@
 
     <properties>
         <java.version>17</java.version>
-        <jakarta.version>3.0.1</jakarta.version>
+        <maven.compiler.release>17</maven.compiler.release>
+        <jaxb2.plugin.version>3.2.0</jaxb2.plugin.version>
+        <buildhelper.plugin.version>3.5.0</buildhelper.plugin.version>
+        <wsdl4j.version>1.6.3</wsdl4j.version>
     </properties>
 
     <dependencies>
-        <!-- Tests (arregla org.junit.jupiter + @SpringBootTest) -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
 
-
-        <!-- Necesario para WAR + ServletInitializer -->
+        <!-- Web (por WAR / Tomcat embebido en dev) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- SOAP infra (Spring WS core opcional, no molesta) -->
+        <!-- SOAP Spring-WS -->
         <dependency>
-            <groupId>org.springframework.ws</groupId>
-            <artifactId>spring-ws-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web-services</artifactId>
         </dependency>
 
-        <!-- WSDL -->
+        <!-- Necesario para que DefaultWsdl11Definition funcione (tu error actual) -->
         <dependency>
             <groupId>wsdl4j</groupId>
             <artifactId>wsdl4j</artifactId>
-            <version>1.6.3</version>
+            <version>${wsdl4j.version}</version>
         </dependency>
 
-        <!-- JAXB -->
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>${jakarta.version}</version>
-        </dependency>
+        <!-- JAXB runtime (Java 17 no trae JAXB) -->
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>${jakarta.version}</version>
         </dependency>
 
-        <!-- JAX-WS / SOAP -->
+        <!-- Tomcat provided si vas a deployar WAR en servidor externo -->
         <dependency>
-            <groupId>jakarta.xml.ws</groupId>
-            <artifactId>jakarta.xml.ws-api</artifactId>
-            <version>${jakarta.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.xml.soap</groupId>
-            <artifactId>jakarta.xml.soap-api</artifactId>
-            <version>${jakarta.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.jws</groupId>
-            <artifactId>jakarta.jws-api</artifactId>
-            <version>3.0.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
         </dependency>
 
-        <!-- Implementaciones runtime -->
-        <dependency>
-            <groupId>com.sun.xml.messaging.saaj</groupId>
-            <artifactId>saaj-impl</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.ws</groupId>
-            <artifactId>jaxws-rt</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-
+        <!-- DevTools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -99,6 +68,28 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- Tests -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.34</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -109,48 +100,48 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- wsgen DESPUÉS de compilar (clave) -->
+            <!-- Genera clases JAXB desde XSD -->
             <plugin>
-                <groupId>com.sun.xml.ws</groupId>
-                <artifactId>jaxws-maven-plugin</artifactId>
-                <version>3.0.1</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>${jaxb2.plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>wsgen</id>
-                        <phase>process-classes</phase>
+                        <id>xjc</id>
                         <goals>
-                            <goal>wsgen</goal>
+                            <goal>xjc</goal>
                         </goals>
+                        <phase>generate-sources</phase>
                         <configuration>
-                            <sei>ar.edu.ubp.das.restaurante2soap.services.PerukaiWS</sei>
-                            <destDir>${project.build.directory}/generated-sources/wsgen</destDir>
-                            <resourceDestDir>${project.build.directory}/generated/wsdl</resourceDestDir>
-                            <genWsdl>true</genWsdl>
-                            <keep>true</keep>
-                            <verbose>true</verbose>
+                            <sources>
+                                <source>${project.basedir}/src/main/resources/xsd</source>
+                            </sources>
+                            <!-- Paquete destino de las clases generadas -->
+                            <packageName>ar.edu.ubp.das.restaurante2soap.ws</packageName>
+
+                            <outputDirectory>${project.build.directory}/generated-sources/jaxb</outputDirectory>
+                            <clearOutputDir>false</clearOutputDir>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-            <!-- Copiar WSDL/XSD a resources (opcional, pero útil) -->
+            <!-- Agrega generated-sources al classpath -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.1</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${buildhelper.plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>copy-wsdl</id>
-                        <phase>prepare-package</phase>
-                        <goals><goal>copy-resources</goal></goals>
+                        <id>add-generated-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
                         <configuration>
-                            <outputDirectory>${project.basedir}/src/main/resources</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.build.directory}/generated/wsdl</directory>
-                                    <includes><include>**/*.*</include></includes>
-                                </resource>
-                            </resources>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/jaxb</source>
+                            </sources>
                         </configuration>
                     </execution>
                 </executions>

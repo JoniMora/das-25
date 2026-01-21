@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://services.perukai.das.ubp.edu.ar/"
+           xmlns:tns="http://services.perukai.das.ubp.edu.ar/"
+           elementFormDefault="qualified">
+
+    <!-- ===================== Req 45: Obtener sucursales ===================== -->
+    <xs:element name="obtenerSucursalesRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="obtenerSucursalesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sucursales" type="tns:Sucursal" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="Sucursal">
+        <xs:sequence>
+            <xs:element name="id" type="xs:int"/>
+            <xs:element name="nombre" type="xs:string"/>
+            <xs:element name="barrio" type="xs:string" minOccurs="0"/>
+            <xs:element name="direccion" type="xs:string" minOccurs="0"/>
+            <xs:element name="capacidad" type="xs:int" minOccurs="0"/>
+            <xs:element name="habilitada" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ===================== Req 37: Consultar disponibilidad ===================== -->
+    <xs:element name="consultarDisponibilidadRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sucursal" type="xs:int"/>
+                <xs:element name="fecha" type="xs:string"/> <!-- ISO: YYYY-MM-DD -->
+                <xs:element name="hora" type="xs:string"/>  <!-- HH:mm -->
+                <xs:element name="comensales" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="consultarDisponibilidadResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="disponible" type="xs:boolean"/>
+                <xs:element name="mensaje" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===================== Req 38: Registrar reserva ===================== -->
+    <xs:element name="registrarReservaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sucursal" type="xs:int"/>
+                <xs:element name="fecha" type="xs:string"/> <!-- ISO -->
+                <xs:element name="hora" type="xs:string"/>  <!-- HH:mm -->
+                <xs:element name="comensales" type="xs:int"/>
+                <xs:element name="clienteNombre" type="xs:string"/>
+                <xs:element name="clienteEmail" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="registrarReservaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigoReserva" type="xs:string" minOccurs="0"/>
+                <xs:element name="estado" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===================== Batch monetización: notificar clicks ===================== -->
+    <xs:element name="notificarClicksRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="restauranteId" type="xs:string"/>
+                <xs:element name="totalClicks" type="xs:int"/>
+                <xs:element name="montoTotal" type="xs:decimal"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="notificarClicksResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="estado" type="xs:string"/>
+                <xs:element name="mensaje" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===================== Ping ===================== -->
+    <xs:element name="pingRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="pingResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

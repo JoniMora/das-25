@@ -1,9 +1,75 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0" targetNamespace="http://services.restaurante2soap.das.ubp.edu.ar/" xmlns:tns="http://services.restaurante2soap.das.ubp.edu.ar/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+  <xs:element name="consultarDisponibilidad" type="tns:consultarDisponibilidad"/>
+
+  <xs:element name="consultarDisponibilidadResponse" type="tns:consultarDisponibilidadResponse"/>
+
   <xs:element name="ping" type="tns:ping"/>
 
   <xs:element name="pingResponse" type="tns:pingResponse"/>
+
+  <xs:element name="registrarReserva" type="tns:registrarReserva"/>
+
+  <xs:element name="registrarReservaResponse" type="tns:registrarReservaResponse"/>
+
+  <xs:complexType name="consultarDisponibilidad">
+    <xs:sequence>
+      <xs:element name="arg0" type="tns:consultarDispRequestDTO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="consultarDispRequestDTO">
+    <xs:sequence>
+      <xs:element name="comensales" type="xs:int"/>
+      <xs:element name="fecha" type="xs:string" minOccurs="0"/>
+      <xs:element name="hora" type="xs:string" minOccurs="0"/>
+      <xs:element name="sucursal" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="consultarDisponibilidadResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:consultarDispResponseDTO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="consultarDispResponseDTO">
+    <xs:sequence>
+      <xs:element name="disponible" type="xs:boolean"/>
+      <xs:element name="mensaje" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="registrarReserva">
+    <xs:sequence>
+      <xs:element name="arg0" type="tns:registrarReservaRequestDTO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="registrarReservaRequestDTO">
+    <xs:sequence>
+      <xs:element name="clienteEmail" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteNombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="comensales" type="xs:int"/>
+      <xs:element name="fecha" type="xs:string" minOccurs="0"/>
+      <xs:element name="hora" type="xs:string" minOccurs="0"/>
+      <xs:element name="sucursal" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="registrarReservaResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:registrarReservaResponseDTO" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="registrarReservaResponseDTO">
+    <xs:sequence>
+      <xs:element name="codigoReserva" type="xs:string" minOccurs="0"/>
+      <xs:element name="estado" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:complexType name="ping">
     <xs:sequence/>
